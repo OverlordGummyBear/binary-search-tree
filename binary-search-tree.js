@@ -38,6 +38,21 @@ class Tree{
         console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.value}`);
         this.prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
+
+    includes(value){
+        let current = this._root;
+
+        while(current !== null){
+            if(value === current.value)
+                return true;
+            else if(value < current.value)
+                current = current.left;
+            else
+                current = current.right
+        }
+
+        return false;
+    }
 }
 
 export default Tree;
