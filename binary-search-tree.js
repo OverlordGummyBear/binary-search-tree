@@ -62,8 +62,25 @@ class Tree{
             return;
         }
 
-        if(!this.includes(value)){
-            
+        let current = this._root;
+
+        while(current !== null){
+            if(value === current.value)
+                return;
+            else if(value < current.value)
+                if(current.left !== null)
+                    current = current.left;
+                else{
+                    current.left = temp;
+                    return;
+                }
+            else
+                if(current.right !== null)
+                    current = current.right
+                else{
+                    current.right = temp;
+                    return;
+                }
         }
     }
 
