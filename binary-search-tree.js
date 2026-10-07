@@ -29,7 +29,7 @@ class Tree{
         return root;
     }
 
-    prettyPrint(node, prefix = '', isLeft = true){
+    prettyPrint(node = this._root, prefix = '', isLeft = true){
         if (node === null || node === undefined) {
             return;
         }
@@ -85,7 +85,71 @@ class Tree{
     }
 
     deleteItem(value){
+        let current = this._root;
+        let parent = null;
 
+        while(current !== null){
+            if(value === current.value)
+                break;
+            else if(value < current.value){
+                parent = current;
+                current = current.left;
+            } else {
+                parent = current;
+                current = current.right
+            }
+        }
+
+        //node was not found
+        if(current === null) return;
+
+        //node was found and it is the root (case where root has no and exactly 1 child)
+        if(parent === null && current.right === null && current.left === null) 
+            this._root = null;
+        else if(parent === null && (current.right !== null && current.left === null || current.right === null && current.left !== null))
+            this._root = current.left === null ? current.right : current.left;
+
+        //node is a leaf
+        if(current.left === null && current.right === null)
+            if(parent.value < current.value)
+                parent.right = null;
+            else 
+                parent.left = null;
+        
+        //node has one child
+        if(current.left === null && current.right !== null || 
+            current.left !== null && current.right === null){
+            if(parent.value < current.value)
+                parent.right = current.left === null ? current.right : current.left;
+            else 
+                parent.left = current.left === null ? current.right : current.left;
+        } 
+
+        //node has two children
+        if(current.left !== null && current.right !== null){
+            let inOrderParent = current;
+            let successor = current.right;
+
+            while(successor.left !== null){
+                inOrderParent = successor;
+                successor = successor.left;
+            }
+
+            let successorRightChild = successor.right;
+            successor.left = current.left;
+
+            if(inOrderParent !== current){
+                inOrderParent.left = successorRightChild;
+                successor.right = current.right;
+            }
+
+            if(parent === null) //node to delete is the root
+                this._root = successor
+            else if(parent.value < current.value)
+                parent.right = successor;
+            else 
+                parent.left = successor;
+        }   
     }
 
     levelOrderForEach(callback){
