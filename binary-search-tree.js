@@ -116,15 +116,45 @@ class Tree{
     }
 
     inOrderForEach(callback){
-        if(callback instanceof Function) throw new Error("A callback is required for levelOrderForEach")
+        if(!(callback instanceof Function)) throw new Error("A callback is required for levelOrderForEach")
+    
+        this.#inOrderForEach(callback, this._root);
+    }
+
+    #inOrderForEach(callback, node){
+        if(node === null) return;
+
+        this.#inOrderForEach(callback, node.left);
+        callback(node.value);
+        this.#inOrderForEach(callback, node.right);
     }
 
     preOrderForEach(callback){
-        if(callback instanceof Function) throw new Error("A callback is required for levelOrderForEach")
+        if(!(callback instanceof Function)) throw new Error("A callback is required for levelOrderForEach")
+    
+        this.#preOrderForEach(callback, this._root);        
+    }
+
+    #preOrderForEach(callback, node){
+        if(node === null) return;
+        
+        callback(node.value);
+        this.#preOrderForEach(callback, node.left);
+        this.#preOrderForEach(callback, node.right);
     }
 
     postOrderForEach(callback){
-        if(callback instanceof Function) throw new Error("A callback is required for levelOrderForEach")
+        if(!(callback instanceof Function)) throw new Error("A callback is required for levelOrderForEach")
+    
+        this.#postOrderForEach(callback, this._root);
+    }
+
+    #postOrderForEach(callback, node){
+        if(node === null) return;
+    
+        this.#postOrderForEach(callback, node.left);
+        this.#postOrderForEach(callback, node.right);
+        callback(node.value);
     }
 
     height(value){
