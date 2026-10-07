@@ -240,6 +240,28 @@ class Tree{
 
     height(value){
         if(!this.includes(value)) return undefined;
+
+        let current = this._root;
+
+        while(current !== null){
+            if(value === current.value)
+                break;
+            else if(value < current.value)
+                current = current.left;
+            else
+                current = current.right
+        }
+
+        return this.#height(current);
+    }
+
+    #height(node){
+        if(node === null) return -1;
+
+        let leftHeight = 1 + this.#height(node.left);
+        let rightHeight = 1 + this.#height(node.right);
+
+        return leftHeight < rightHeight ? rightHeight : leftHeight;
     }
 
     depth(value){
