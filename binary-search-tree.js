@@ -72,8 +72,48 @@ class Tree{
     }
 
     levelOrderForEach(callback){
-        if(callback instanceof Function) throw new Error("A callback is required for levelOrderForEach")
-    }   
+        if(!(callback instanceof Function)) throw new Error("A callback is required for levelOrderForEach")
+
+        const queue = [];
+        queue.push(this._root);
+        
+        while(queue.length !== 0){
+            let current = queue.shift();
+
+            if(current.left !== null)
+                queue.push(current.left);
+            if(current.right !== null)
+                queue.push(current.right)
+
+            callback(current.value);
+        }
+    }
+
+    levelOrderForEachRec(callback){
+        if(!(callback instanceof Function)) throw new Error("A callback is required for levelOrderForEach")
+
+        this.#levelOrderForEachRec(callback, [this._root])
+    }
+
+    #levelOrderForEachRec(callback, currentLevel){
+        if(currentLevel.length === 0)
+            return;
+
+        let nextLevel = []
+
+        for(let i = 0; i < currentLevel.length; i++){
+            let current = currentLevel[i];
+            
+            if(current.left !== null)
+                nextLevel.push(current.left);
+            if(current.right !== null)
+                nextLevel.push(current.right)
+
+            callback(current.value);
+        }
+
+        this.#levelOrderForEachRec(callback, nextLevel)
+    }
 
     inOrderForEach(callback){
         if(callback instanceof Function) throw new Error("A callback is required for levelOrderForEach")
@@ -88,7 +128,7 @@ class Tree{
     }
 
     height(value){
-        
+        if(!this.includes(value)) return undefined;
     }
 
     depth(value){
