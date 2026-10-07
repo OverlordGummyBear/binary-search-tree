@@ -298,7 +298,13 @@ class Tree{
     }
 
     reBalance(){
+        if(this.isBalanced()) return;
 
+        let inOrderArray = []
+
+        this.inOrderForEach(value => inOrderArray.push(value));
+
+        this._root = this.#buildTree(inOrderArray);
     }
 
 }
