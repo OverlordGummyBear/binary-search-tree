@@ -7,7 +7,7 @@ class Node{
 }
 
 class Tree{
-    _root;
+    _root = null;
 
     constructor(array){
         this._root = this.#buildTree(array);
@@ -53,6 +53,70 @@ class Tree{
 
         return false;
     }
+
+    insert(value){
+        let temp = new Node(value);
+
+        if(this._root === null){
+            this._root = temp;
+            return;
+        }
+
+        if(!this.includes(value)){
+            
+        }
+    }
+
+    deleteItem(value){
+
+    }
+
+    levelOrderForEach(callback){
+        if(callback instanceof Function) throw new Error("A callback is required for levelOrderForEach")
+    }   
+
+    inOrderForEach(callback){
+        if(callback instanceof Function) throw new Error("A callback is required for levelOrderForEach")
+    }
+
+    preOrderForEach(callback){
+        if(callback instanceof Function) throw new Error("A callback is required for levelOrderForEach")
+    }
+
+    postOrderForEach(callback){
+        if(callback instanceof Function) throw new Error("A callback is required for levelOrderForEach")
+    }
+
+    height(value){
+        
+    }
+
+    depth(value){
+        if(!this.includes(value)) return undefined;
+
+        let current = this._root;
+        let depth = 0;
+
+        while(current !== null){
+            if(value === current.value)
+                return depth;
+            else if(value < current.value)
+                current = current.left;
+            else
+                current = current.right
+
+            depth++;
+        }
+    }
+
+    isBalanced(){
+
+    }
+
+    reBalance(){
+
+    }
+
 }
 
 export default Tree;

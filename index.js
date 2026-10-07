@@ -1,7 +1,12 @@
 import Tree from "./binary-search-tree.js";
 
-let tree = new Tree([7, 1, 5, 8, 10, 12, 4, 2, 1]);
+let tree = new Tree([12, 43, 23, 1, 8, 21, 3, 44]);
 
-console.log(tree.includes(12));
 
-//console.log(tree.prettyPrint(tree.getRoot()))
+tree.insert(12)
+
+tree.prettyPrint(tree.getRoot())
+
+console.log(tree.height(21))
+console.log(tree.height(1))
+console.log(tree.height(23))
